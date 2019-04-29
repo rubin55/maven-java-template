@@ -1,26 +1,54 @@
 package com.example.test;
 
+import org.apache.http.HttpEntity;
+import org.apache.http.client.methods.CloseableHttpResponse;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.impl.client.HttpClients;
+import org.apache.http.util.EntityUtils;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.security.cert.Certificate;
-import java.io.*;
 
 import javax.net.ssl.HttpsURLConnection;
 import javax.net.ssl.SSLPeerUnverifiedException;
 
+
 public class HttpsClient {
 
+    private static String URL = "https://nodeclipse.github.io/updates/markdown/";
+
     public static void main(String[] args) {
-        new HttpsClient().testIt();
+        //new HttpsClient().testNative();
+        new HttpsClient().testApache();
     }
 
-    private void testIt() {
-
-        String https_url = "https://nodeclipse.github.io/updates/markdown/";
+    private void testApache() {
+        try {
+            CloseableHttpClient httpclient = HttpClients.createDefault();
+            HttpGet httpget = new HttpGet(URL);
+            CloseableHttpResponse response = httpclient.execute(httpget);
+            try {
+                HttpEntity entity = response.getEntity();
+                if (entity != null) {
+                    System.out.println(EntityUtils.toString(entity));
+                }
+            } finally {
+                response.close();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    private void testNative() {
         URL url;
         try {
 
-            url = new URL(https_url);
+            url = new URL(URL);
             HttpsURLConnection con = (HttpsURLConnection) url.openConnection();
 
             // dumpl all cert info
