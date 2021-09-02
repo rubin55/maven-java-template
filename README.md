@@ -1,7 +1,7 @@
-# An example Java 8 project using Maven and JUnit 5.x
+# An example Java project using Maven and JUnit
 
-1. Get adoptopenjdk-8: https://adoptopenjdk.net/
-2. Get maven 3.6.x: https://maven.apache.org/
+1. Get java 16.x: https://adoptium.net/
+2. Get maven 3.8.x: https://maven.apache.org/
 3. Add above to your path if neccessary.
 4. `git clone git@github.com:example/test.git`
 5. `mvn clean package`
